@@ -13,4 +13,4 @@ demo = gr.Interface(
     outputs=[gr.Audio(label="Synthesized"), gr.File(label="MIDI File")],
 )
 
-demo.launch()
+demo.launch(server_name='0.0.0.0')

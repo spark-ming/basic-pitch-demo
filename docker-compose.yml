@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  basic-pitch-demo:
+    container_name: basic-pitch-demo
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - app-cache:/root/.cache
+    ports:
+      - 7860:7860
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.basicpitch.rule=Host(`basicpitch.ngeru.net`)"
+      - "traefik.http.routers.basicpitch.tls=true"
+      - "traefik.http.routers.basicpitch.tls.certresolver=letsencrypt"
+
+volumes:
+  app-cache:
+    driver: local
+
+networks:
+  default:
+    external:
+      name: traefik_default
